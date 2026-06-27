@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { AnimatePresence, motion, useMotionValue } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Lenis from 'lenis';
 
 const navigation = [
@@ -22,7 +22,11 @@ export function SiteShell({ children }: { children: ReactNode }) {
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   const [loaderVisible, setLoaderVisible] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
+
+  /* Smooth scroll */
   useEffect(() => {
     const lenis = new Lenis({
       lerp: 0.1,
@@ -43,6 +47,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  /* Loader & custom cursor */
   useEffect(() => {
     const timeout = window.setTimeout(() => {
       setLoaderVisible(false);
@@ -60,6 +65,23 @@ export function SiteShell({ children }: { children: ReactNode }) {
       window.removeEventListener('mousemove', handleMove);
     };
   }, [cursorX, cursorY]);
+
+  /* Lock body scroll when mobile menu is open */
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  /* Close menu on route change */
+  useEffect(() => {
+    closeMenu();
+  }, [pathname, closeMenu]);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-ink text-white">
@@ -79,18 +101,20 @@ export function SiteShell({ children }: { children: ReactNode }) {
         style={{ x: cursorX, y: cursorY }}
       />
 
+      {/* ─── Header ─── */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/72 backdrop-blur-xl">
-        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-6 px-5 py-4 sm:px-6 lg:px-8">
-          <Link href="/" className="group flex items-center gap-3">
-            <span className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-md border border-primary/20 bg-gradient-to-br from-primary/8 to-secondary/6 shadow-glow transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_0_32px_rgba(77,163,255,0.35)]">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
+          <Link href="/" className="group flex items-center gap-2.5 sm:gap-3" onClick={closeMenu}>
+            <span className="relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-md border border-primary/20 bg-gradient-to-br from-primary/8 to-secondary/6 shadow-glow transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_0_32px_rgba(77,163,255,0.35)] sm:h-10 sm:w-10">
               <Image src="/branding/aximo-logo-mark.jpg" alt="AXIMO logo" fill className="object-cover" sizes="40px" priority />
             </span>
             <div>
-              <p className="font-heading text-lg tracking-[0.18em] text-white">AXIMO</p>
-              <p className="text-[0.62rem] uppercase tracking-[0.38em] text-white/60">creative media startup</p>
+              <p className="font-heading text-base tracking-[0.18em] text-white sm:text-lg">AXIMO</p>
+              <p className="hidden text-[0.62rem] uppercase tracking-[0.38em] text-white/60 sm:block">creative media startup</p>
             </div>
           </Link>
 
+          {/* Desktop nav */}
           <nav className="hidden items-center gap-2 rounded-full border border-primary/12 bg-black/6 p-1 text-xs uppercase tracking-[0.24em] text-white/68 md:flex">
             {navigation.map((item) => (
               <Link
@@ -103,15 +127,96 @@ export function SiteShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          <Link
-            href="/contact"
-            className="rounded-md border border-primary/24 bg-gradient-to-br from-primary/8 to-secondary/6 px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-white transition hover:-translate-y-0.5 hover:shadow-glow"
-          >
-            Start a project
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/contact"
+              className="hidden rounded-md border border-primary/24 bg-gradient-to-br from-primary/8 to-secondary/6 px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-white transition hover:-translate-y-0.5 hover:shadow-glow sm:inline-flex"
+            >
+              Start a project
+            </Link>
+
+            {/* Hamburger button — mobile only */}
+            <button
+              type="button"
+              onClick={() => setMenuOpen((v) => !v)}
+              className="relative z-[70] flex h-11 w-11 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] transition-colors duration-300 active:bg-white/[0.08] md:hidden"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+            >
+              <div className="flex w-5 flex-col items-center gap-[5px]">
+                <span
+                  className={`block h-[2px] w-5 rounded-full bg-white transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`}
+                />
+                <span
+                  className={`block h-[2px] w-5 rounded-full bg-white transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}
+                />
+                <span
+                  className={`block h-[2px] w-5 rounded-full bg-white transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`}
+                />
+              </div>
+            </button>
+          </div>
         </div>
       </header>
 
+      {/* ─── Mobile Menu Overlay ─── */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[55] bg-ink/95 backdrop-blur-2xl md:hidden"
+          >
+            <motion.nav
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="flex h-full flex-col items-center justify-center gap-2 px-6"
+            >
+              {navigation.map((item, index) => (
+                <motion.div
+                  key={item.href}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.06 * index, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Link
+                    href={item.href}
+                    onClick={closeMenu}
+                    className={`block rounded-2xl px-8 py-4 text-center font-heading text-2xl tracking-[0.12em] transition-colors duration-200 ${
+                      item.href === '/contact' && pathname === '/contact'
+                        ? 'text-skyglow'
+                        : 'text-white/80 active:text-skyglow'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.06 * navigation.length, duration: 0.4 }}
+                className="mt-6"
+              >
+                <Link
+                  href="/contact"
+                  onClick={closeMenu}
+                  className="inline-flex items-center justify-center rounded-full border border-skyglow/30 bg-skyglow/10 px-8 py-3.5 text-sm font-medium uppercase tracking-[0.24em] text-skyglow transition hover:bg-skyglow/18 hover:shadow-glow"
+                >
+                  Start a project
+                </Link>
+              </motion.div>
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ─── Loader ─── */}
       <AnimatePresence>
         {loaderVisible && (
           <motion.div
@@ -140,6 +245,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
         )}
       </AnimatePresence>
 
+      {/* ─── Main content ─── */}
       <AnimatePresence mode="wait">
         <motion.main
           key={pathname}
@@ -147,37 +253,43 @@ export function SiteShell({ children }: { children: ReactNode }) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -18 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-10 pt-24"
+          className="relative z-10 pt-[4.5rem] sm:pt-24"
         >
           {children}
         </motion.main>
       </AnimatePresence>
 
+      {/* ─── Footer ─── */}
       <footer className="relative z-10 border-t border-primary/12 bg-ink text-white">
-        <div className="mx-auto grid w-full max-w-7xl gap-8 px-5 py-12 sm:px-6 lg:grid-cols-[1.2fr_0.9fr_0.9fr] lg:px-8">
-          <div>
+        <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-10 sm:gap-8 sm:px-6 sm:py-12 md:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.9fr] lg:px-8">
+          {/* Brand col */}
+          <div className="text-center md:text-left">
             <div className="group inline-flex items-center gap-3">
               <span className="relative h-10 w-10 overflow-hidden rounded-md border border-skyglow/24 bg-white/[0.04] transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_0_28px_rgba(77,163,255,0.24)]">
                 <Image src="/branding/aximo-logo-mark.jpg" alt="AXIMO logo" fill className="object-cover" sizes="40px" />
               </span>
               <p className="section-label text-white/40">AXIMO</p>
             </div>
-            <p className="mt-4 max-w-md text-2xl leading-tight text-white/88 sm:text-3xl">
+            <p className="mt-4 text-xl leading-tight text-white/88 sm:text-2xl lg:text-3xl">
               A local creative startup with global ambition.
             </p>
           </div>
-          <div>
+
+          {/* Nav col */}
+          <div className="text-center md:text-left">
             <p className="text-xs uppercase tracking-[0.28em] text-white/40">Navigation</p>
-            <div className="mt-4 flex flex-col gap-3 text-sm text-white/70">
-              <Link href="/#hero">Home</Link>
-              <Link href="/#services">Services</Link>
-              <Link href="/#work">Work</Link>
-              <Link href="/contact">Contact</Link>
+            <div className="mt-4 flex flex-wrap justify-center gap-3 text-sm text-white/70 md:flex-col md:justify-start">
+              <Link href="/#hero" className="min-h-[44px] flex items-center justify-center md:justify-start">Home</Link>
+              <Link href="/#services" className="min-h-[44px] flex items-center justify-center md:justify-start">Services</Link>
+              <Link href="/#work" className="min-h-[44px] flex items-center justify-center md:justify-start">Work</Link>
+              <Link href="/contact" className="min-h-[44px] flex items-center justify-center md:justify-start">Contact</Link>
             </div>
           </div>
-          <div>
+
+          {/* Connect col */}
+          <div className="text-center md:col-span-2 md:text-left lg:col-span-1">
             <p className="text-xs uppercase tracking-[0.28em] text-white/40">Connect</p>
-            <div className="mt-5 flex flex-col gap-4">
+            <div className="mt-5 flex flex-col gap-3 sm:gap-4">
 
               {/* Instagram */}
               <a
@@ -194,7 +306,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                   playsInline
                   className="w-full object-contain"
                 />
-                <div className="flex items-center gap-2 px-3.5 py-2.5">
+                <div className="flex items-center justify-center gap-2 px-3.5 py-2.5 md:justify-start">
                   <p className="text-sm text-white/80 transition-colors duration-300 group-hover:text-white">Instagram</p>
                   <span className="text-white/20">·</span>
                   <p className="text-[0.68rem] tracking-wide text-white/40">@aximocreative</p>
@@ -206,7 +318,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 href="https://wa.me/918127406133"
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3 transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-skyglow/20 hover:bg-white/[0.05] hover:shadow-[0_8px_30px_rgba(77,163,255,0.12)]"
+                className="group flex min-h-[48px] items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3 transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-skyglow/20 hover:bg-white/[0.05] hover:shadow-[0_8px_30px_rgba(77,163,255,0.12)] active:scale-[0.98]"
               >
                 <motion.span
                   animate={{ y: [0, -2, 0] }}
@@ -228,7 +340,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 href="https://wa.me/918354882580"
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3 transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-skyglow/20 hover:bg-white/[0.05] hover:shadow-[0_8px_30px_rgba(77,163,255,0.12)]"
+                className="group flex min-h-[48px] items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3 transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-skyglow/20 hover:bg-white/[0.05] hover:shadow-[0_8px_30px_rgba(77,163,255,0.12)] active:scale-[0.98]"
               >
                 <motion.span
                   animate={{ y: [0, -2, 0] }}
@@ -248,7 +360,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               {/* Email */}
               <a
                 href="mailto:aximocreative@gmail.com"
-                className="group flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3 transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-skyglow/20 hover:bg-white/[0.05] hover:shadow-[0_8px_30px_rgba(77,163,255,0.12)]"
+                className="group flex min-h-[48px] items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3 transition-all duration-[350ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:border-skyglow/20 hover:bg-white/[0.05] hover:shadow-[0_8px_30px_rgba(77,163,255,0.12)] active:scale-[0.98]"
               >
                 <motion.span
                   animate={{ y: [0, -2, 0] }}
@@ -269,7 +381,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             </div>
           </div>
         </div>
-        <div className="border-t border-primary/8 px-5 py-4 text-center text-[0.7rem] uppercase tracking-[0.3em] text-white/50 sm:px-6 lg:px-8">
+        <div className="border-t border-primary/8 px-4 py-4 text-center text-[0.65rem] uppercase tracking-[0.3em] text-white/50 sm:px-6 sm:text-[0.7rem] lg:px-8">
           © 2026 AXIMO. Designed to move brands forward.
         </div>
       </footer>

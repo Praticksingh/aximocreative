@@ -73,8 +73,8 @@ function SectionHeading({ eyebrow, title, copy }: { eyebrow: string; title: stri
   return (
     <div className="max-w-3xl">
       <p className="section-label text-skyglow/80">{eyebrow}</p>
-      <h2 className="font-heading mt-4 text-4xl leading-none tracking-tight text-white sm:text-5xl lg:text-6xl text-balance">{title}</h2>
-      <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68 sm:text-base">{copy}</p>
+      <h2 className="font-heading mt-4 text-[clamp(2rem,5.5vw,3.75rem)] leading-tight tracking-tight text-white text-balance">{title}</h2>
+      <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/68 sm:text-base">{copy}</p>
     </div>
   );
 }
@@ -104,12 +104,12 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-heading mt-6 text-5xl leading-[0.92] tracking-[-0.05em] text-white sm:text-7xl lg:text-[7.5rem]"
+            className="font-heading mt-6 text-[clamp(2.5rem,7.5vw,7.25rem)] leading-[1.05] sm:leading-[0.92] tracking-[-0.05em] text-white"
           >
             <span className="block">Every Brand Wants</span>
             <span className="block text-white/82">Attention.</span>
             <motion.span
-              className="mt-4 block text-white/58 sm:mt-6"
+              className="mt-4 block text-white/58 sm:mt-6 text-[clamp(1.125rem,3vw,1.75rem)] font-normal tracking-normal"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.35, duration: 0.7 }}
@@ -122,7 +122,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.7 }}
-            className="mt-8 max-w-2xl text-base leading-8 text-white/70 sm:text-lg"
+            className="mt-8 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-lg sm:leading-8"
           >
             AXIMO builds premium digital presence for ambitious local brands, turning social media, motion, and brand identity into a cinematic growth system.
           </motion.p>
@@ -133,10 +133,10 @@ export function HeroSection() {
             transition={{ delay: 0.5, duration: 0.7 }}
             className="mt-10 flex flex-col gap-3 sm:flex-row"
           >
-            <Link href="/#services" className="inline-flex items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-medium uppercase tracking-[0.24em] text-ink transition hover:-translate-y-0.5 hover:bg-skywash">
+            <Link href="/#services" className="inline-flex min-h-[48px] items-center justify-center rounded-full bg-white px-6 py-3 text-sm font-medium uppercase tracking-[0.24em] text-ink transition hover:-translate-y-0.5 hover:bg-skywash active:scale-[0.98]">
               Explore AXIMO
             </Link>
-            <Link href="/contact" className="inline-flex items-center justify-center rounded-full border border-skyglow/30 bg-skyglow/10 px-6 py-3 text-sm font-medium uppercase tracking-[0.24em] text-skyglow transition hover:-translate-y-0.5 hover:bg-skyglow/18 hover:shadow-glow">
+            <Link href="/contact" className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-skyglow/30 bg-skyglow/10 px-6 py-3 text-sm font-medium uppercase tracking-[0.24em] text-skyglow transition hover:-translate-y-0.5 hover:bg-skyglow/18 hover:shadow-glow active:scale-[0.98]">
               Start Your Brand Journey
             </Link>
           </motion.div>
@@ -215,7 +215,7 @@ export function StorySection() {
       <div className="relative mx-auto grid w-full max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
         <motion.div {...reveal}>
           <p className="section-label text-secondary/65">The story</p>
-          <h2 className="font-heading mt-4 max-w-xl text-4xl leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl text-balance">
+          <h2 className="font-heading mt-4 max-w-xl text-[clamp(2rem,5vw,3.75rem)] leading-tight tracking-tight text-balance">
             <span className="bg-[linear-gradient(120deg,#0A0F1C_20%,#123E6B_54%,#0E4B8F_100%)] bg-clip-text text-transparent">
               Most brands do not
             </span>{' '}
@@ -466,7 +466,7 @@ export function PortfolioSection() {
       <div className="relative mx-auto w-full max-w-7xl">
         <div className="max-w-3xl">
           <p className="section-label text-skyglow/80">Portfolio</p>
-          <h2 className="font-heading mt-4 text-4xl leading-none tracking-tight text-white sm:text-5xl lg:text-6xl text-balance">
+          <h2 className="font-heading mt-4 text-[clamp(2rem,5vw,3.75rem)] leading-tight tracking-tight text-white text-balance">
             Work that feels like a reveal, not a gallery.
           </h2>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68 sm:text-base">
@@ -554,7 +554,7 @@ export function PortfolioSection() {
                     </div>
                     <div className="relative max-w-sm space-y-4">
                       <p className="text-[0.68rem] uppercase tracking-[0.34em] text-white/68">AXIMO / selected case</p>
-                      <h3 className={`max-w-[12ch] font-heading text-4xl leading-[0.96] tracking-[-0.04em] drop-shadow-[0_2px_14px_rgba(3,8,20,0.45)] sm:text-5xl ${isActive ? 'text-white' : 'text-white/92'}`}>
+                      <h3 className={`max-w-[12ch] font-heading text-[clamp(1.75rem,4.5vw,3rem)] leading-[1.05] sm:leading-[0.96] tracking-[-0.04em] drop-shadow-[0_2px_14px_rgba(3,8,20,0.45)] ${isActive ? 'text-white' : 'text-white/92'}`}>
                         {item.title}
                       </h3>
                       <p className={`max-w-xs text-sm leading-7 sm:text-[0.95rem] ${isActive ? 'text-white/84' : 'text-white/74'}`}>{item.tone}</p>
@@ -577,9 +577,11 @@ export function PortfolioSection() {
                 key={item.title}
                 type="button"
                 onClick={() => scrollToCard(index)}
-                className={`h-2.5 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-10 bg-skyglow shadow-glow' : 'w-2.5 bg-white/20 hover:bg-white/35'}`}
+                className="group flex h-12 w-12 items-center justify-center rounded-full transition duration-300"
                 aria-label={`Go to portfolio card ${index + 1}`}
-              />
+              >
+                <span className={`h-2.5 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-10 bg-skyglow shadow-glow' : 'w-2.5 bg-white/20 group-hover:bg-white/35'}`} />
+              </button>
             ))}
           </div>
         </div>
@@ -660,10 +662,10 @@ export function TeamSection() {
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(77,163,255,0.25),transparent_42%)]" />
           <p className="relative section-label text-skyglow/88">Team</p>
-          <h2 className="relative font-heading mt-4 max-w-3xl text-4xl font-semibold leading-[0.96] tracking-tight text-[#F8FAFF] drop-shadow-[0_6px_18px_rgba(5,10,20,0.5)] sm:text-5xl lg:text-6xl text-balance">
+          <h2 className="relative font-heading mt-4 max-w-3xl text-[clamp(2rem,5vw,3.75rem)] font-semibold leading-tight tracking-tight text-[#F8FAFF] drop-shadow-[0_6px_18px_rgba(5,10,20,0.5)] text-balance">
             Founders with startup energy, not office hierarchy.
           </h2>
-          <p className="relative mt-5 max-w-2xl text-sm leading-7 text-[#F8FAFF]/78 sm:text-base">
+          <p className="relative mt-5 max-w-2xl text-sm leading-relaxed text-[#F8FAFF]/78 sm:text-base">
             AXIMO is presented like a team that is building the future in public: focused, ambitious, and clear about what it wants to become.
           </p>
         </motion.div>
@@ -697,15 +699,15 @@ export function TeamSection() {
                 transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
               />
 
-              <div className="relative flex items-start justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-skyglow/34 bg-[linear-gradient(145deg,rgba(14,75,143,0.3),rgba(10,15,28,0.76))] text-sm font-semibold tracking-[0.14em] text-white shadow-[0_0_28px_rgba(77,163,255,0.24)]">
+              <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-skyglow/34 bg-[linear-gradient(145deg,rgba(14,75,143,0.3),rgba(10,15,28,0.76))] text-sm font-semibold tracking-[0.14em] text-white shadow-[0_0_28px_rgba(77,163,255,0.24)]">
                     {person.initials}
                     <div className="pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.22),transparent_48%)]" />
                   </div>
                   <div>
                     <p className="text-[0.66rem] uppercase tracking-[0.3em] text-secondary/58">Founder profile</p>
-                    <h3 className="mt-2 font-heading text-3xl leading-tight text-ink sm:text-[2rem]">{person.name}</h3>
+                    <h3 className="mt-1 font-heading text-2xl leading-tight text-ink sm:text-[2rem]">{person.name}</h3>
                   </div>
                 </div>
 
@@ -751,7 +753,7 @@ export function TestimonialsSection() {
         <div className="mt-14 grid gap-4 lg:grid-cols-3">
           {testimonials.map((testimonial) => (
             <motion.figure key={testimonial.quote} {...reveal} className="rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-6">
-              <blockquote className="text-xl leading-9 text-white sm:text-2xl">“{testimonial.quote}”</blockquote>
+              <blockquote className="text-[clamp(1.125rem,4vw,1.5rem)] leading-relaxed text-white">“{testimonial.quote}”</blockquote>
               <figcaption className="mt-6 text-xs uppercase tracking-[0.32em] text-skyglow/75">{testimonial.by}</figcaption>
             </motion.figure>
           ))}
@@ -770,11 +772,11 @@ export function CtaSection() {
           <div className="relative flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="section-label text-ink/52">Call to action</p>
-              <h2 className="font-heading mt-5 max-w-3xl text-4xl leading-none tracking-tight text-ink sm:text-5xl lg:text-7xl text-balance">
+              <h2 className="font-heading mt-5 max-w-3xl text-[clamp(2rem,6vw,4.5rem)] leading-tight tracking-tight text-ink text-balance">
                 Your brand deserves more than ordinary.
               </h2>
             </div>
-            <Link href="/contact" className="inline-flex w-fit items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-medium uppercase tracking-[0.24em] text-white transition hover:-translate-y-0.5 hover:bg-black">
+            <Link href="/contact" className="inline-flex min-h-[48px] w-fit items-center justify-center rounded-full bg-ink px-6 py-3 text-sm font-medium uppercase tracking-[0.24em] text-white transition hover:-translate-y-0.5 hover:bg-black active:scale-[0.98]">
               Let&apos;s Build Something Unforgettable
             </Link>
           </div>

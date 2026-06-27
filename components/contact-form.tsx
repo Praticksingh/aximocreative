@@ -85,7 +85,7 @@ export function ContactForm() {
           <button
             disabled={isSending}
             type="submit"
-            className="group inline-flex items-center justify-center rounded-full border border-skyglow/25 bg-[linear-gradient(135deg,rgba(14,75,143,0.95),rgba(77,163,255,0.9))] px-6 py-3 text-sm font-medium uppercase tracking-[0.24em] text-white shadow-[0_18px_40px_rgba(14,75,143,0.24),0_0_40px_rgba(77,163,255,0.15)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_54px_rgba(14,75,143,0.34),0_0_54px_rgba(77,163,255,0.22)] disabled:cursor-not-allowed disabled:opacity-70"
+            className="group inline-flex min-h-[48px] items-center justify-center rounded-full border border-skyglow/25 bg-[linear-gradient(135deg,rgba(14,75,143,0.95),rgba(77,163,255,0.9))] px-6 py-3 text-sm font-medium uppercase tracking-[0.24em] text-white shadow-[0_18px_40px_rgba(14,75,143,0.24),0_0_40px_rgba(77,163,255,0.15)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_54px_rgba(14,75,143,0.34),0_0_54px_rgba(77,163,255,0.22)] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
           >
             <span className="mr-3 inline-flex h-2 w-2 rounded-full bg-white/90 shadow-[0_0_16px_rgba(255,255,255,0.8)] transition group-hover:scale-110" />
             {isSending ? 'Sending' : 'Send Inquiry'}

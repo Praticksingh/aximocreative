@@ -23,10 +23,10 @@ export default function ContactPage() {
             </span>
             <span className="text-[0.68rem] uppercase tracking-[0.28em] text-skyglow/82">AXIMO Contact Portal</span>
           </div>
-          <h1 className="font-heading mt-5 text-5xl leading-[0.93] tracking-[-0.06em] text-white sm:text-6xl lg:text-[4.5rem]">
+          <h1 className="font-heading mt-5 text-[clamp(2.25rem,6vw,4.5rem)] leading-tight tracking-[-0.06em] text-white">
             Start a cinematic conversation with AXIMO.
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-8 text-white/70 sm:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
             Share your business, the problem you want solved, and the result you want to see. We’ll respond with a clear next step and a direct conversation, not a generic pitch.
           </p>
 
@@ -55,7 +55,7 @@ export default function ContactPage() {
                   <a
                     key={phone}
                     href={`tel:${phone.replace(/\s+/g, '')}`}
-                    className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 transition duration-300 hover:-translate-y-0.5 hover:border-skyglow/24 hover:bg-white/[0.06] hover:text-skyglow"
+                    className="inline-flex min-h-[48px] items-center justify-center rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-2 transition duration-300 hover:-translate-y-0.5 hover:border-skyglow/24 hover:bg-white/[0.06] hover:text-skyglow active:scale-[0.98]"
                   >
                     {phone}
                   </a>
@@ -65,14 +65,14 @@ export default function ContactPage() {
 
             <div className="glass-panel rounded-[1.5rem] border border-white/10 bg-white/[0.04] p-5">
               <p className="text-[0.68rem] uppercase tracking-[0.3em] text-white/40">What happens next</p>
-              <p className="mt-4 max-w-lg text-sm leading-7 text-white/68">
+              <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/68">
                 You’ll receive a confirmation email right away. AXIMO also sends an automatic response so the conversation starts cleanly while our team reviews your inquiry.
               </p>
             </div>
           </div>
 
           <div className="mt-10">
-            <Link href="/" className="inline-flex items-center justify-center rounded-full border border-skyglow/30 bg-skyglow/10 px-5 py-3 text-sm font-medium uppercase tracking-[0.24em] text-skyglow transition hover:-translate-y-0.5 hover:bg-skyglow/18 hover:shadow-glow">
+            <Link href="/" className="inline-flex min-h-[48px] items-center justify-center rounded-full border border-skyglow/30 bg-skyglow/10 px-5 py-3 text-sm font-medium uppercase tracking-[0.24em] text-skyglow transition hover:-translate-y-0.5 hover:bg-skyglow/18 hover:shadow-glow active:scale-[0.98]">
               Back to home
             </Link>
           </div>
