@@ -4,7 +4,7 @@ import { ContactForm } from '@/components/contact-form';
 
 const phoneNumbers = [
   '+91 81274 06133',
-  '+91 83170 56423',
+  '+91 83170 56193',
   '+91 83548 82580',
 ];
 
