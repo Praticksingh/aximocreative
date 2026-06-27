@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  /* AXIMO brand tokens */
+  --bg: #0A0F1C; /* Dark background */
+  --panel: rgba(10, 16, 28, 0.78);
+  --panel-soft: rgba(10, 16, 28, 0.52);
+  --border: rgba(77, 163, 255, 0.12);
+  --text: #F5F7FA;
+  --muted: rgba(245, 247, 251, 0.68);
+  --primary: #0E4B8F;
+  --secondary: #123E6B;
+  --accent: #4DA3FF;
+  --accent-soft: rgba(77,163,255,0.12);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at top, rgba(77,163,255,0.10), transparent 26%),
+    linear-gradient(180deg, var(--bg) 0%, #071026 48%, #0f243d 100%);
+  color: var(--text);
+  font-feature-settings: 'ss01' on, 'ss02' on;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+.font-body {
+  font-family: var(--font-body), sans-serif;
+}
+
+.font-heading,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: rgba(119, 215, 255, 0.3);
+  color: white;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.glass-panel {
+  background: linear-gradient(180deg, rgba(8,12,22,0.78), rgba(10,16,28,0.6));
+  border: 1px solid rgba(77,163,255,0.06);
+  box-shadow: 0 30px 90px rgba(4,8,18,0.6), 0 0 48px rgba(77,163,255,0.06);
+  backdrop-filter: blur(22px) saturate(120%);
+}
+
+.glass-soft {
+  background: linear-gradient(180deg, rgba(10,16,28,0.56), rgba(10,16,28,0.44));
+  border: 1px solid rgba(77,163,255,0.04);
+  backdrop-filter: blur(18px) saturate(110%);
+}
+
+.grid-shell {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.hero-sheen {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(77,163,255,0.48), rgba(255,255,255,0.02));
+  background-size: 200% 100%;
+}
+
+.soft-ring {
+  box-shadow: 0 0 0 1px rgba(77,163,255,0.18), 0 0 56px rgba(77,163,255,0.12);
+}
+
+.section-label {
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.brand-primary {
+  color: var(--primary);
+}
+
+.aximo-carousel-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(77, 163, 255, 0.85) rgba(255, 255, 255, 0.06);
+}
+
+.aximo-carousel-scrollbar::-webkit-scrollbar {
+  height: 10px;
+}
+
+.aximo-carousel-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+}
+
+.aximo-carousel-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, rgba(14, 75, 143, 0.95), rgba(77, 163, 255, 0.95));
+  border-radius: 999px;
+  border: 2px solid rgba(10, 15, 28, 0.9);
+  box-shadow: 0 0 18px rgba(77, 163, 255, 0.35);
+}
+
+.aximo-carousel-scrollbar.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+}
